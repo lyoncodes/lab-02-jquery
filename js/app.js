@@ -1,4 +1,5 @@
 'use strict'
+const allHorns = []
 
 function Horn (obj) {
   this.image_url = obj.image_url
@@ -9,16 +10,13 @@ function Horn (obj) {
 
   allHorns.push(this)
 }
-const allHorns = []
-const uniqueHorns = []
-console.log(allHorns)
 
 Horn.prototype.render = function () {
   $('main').append('<div class = "entry"></div>')
   let $entry = $('div[class = "entry"]')
-  let photoTemplate = $('#photo-template').html()
-  $entry.html(photoTemplate)
-
+  let hornTemplate = $('#photo-template').html()
+  $entry.html(hornTemplate)
+  // CONTENT
   $entry.find('h2').text(this.title)
   $entry.find('img').attr('src', this.image_url)
   $entry.find('p').text(this.description)
@@ -26,18 +24,18 @@ Horn.prototype.render = function () {
   $entry.removeClass('entry')
   $entry.attr('class', this.keyword)
 }
-Horn.prototype.menu = function () {
-  if (uniqueHorns.indexOf(this.keyword) === -1) {
-    $('select').append('<option class = "option"></option>')
-    let $option = $('option[class = "option"]')
-    $option.attr('value', this.keyword)
-    $option.text(this.keyword)
-    $option.removeClass('option')
-    uniqueHorns.push(this.keyword)
-  }
-}
+// Horn.prototype.menu = function () {
+//   if (uniqueHorns.indexOf(this.keyword) === -1) {
+//     $('select').append('<option class = "option"></option>')
+//     let $option = $('option[class = "option"]')
+//     $option.attr('value', this.keyword)
+//     $option.text(this.keyword)
+//     $option.removeClass('option')
+//     uniqueHorns.push(this.keyword)
+//   }
+// }
 function readJson () {
-  $.get('./data/page-1.json', 'json')
+  $.get('data/page-1.json', 'json')
     .then(data => {
       data.forEach(hornObj => {
         new Horn(hornObj)
@@ -46,20 +44,20 @@ function readJson () {
     .then(() => {
       allHorns.forEach(horn => {
         horn.render()
-        horn.menu()
+        // horn.menu()
       })
     })
 }
+
 $(() => readJson())
 console.log(allHorns)
 
-// $('select').on('change', function () {
-//   let $selection = $(this).val()
-//   if ($selection === 'default') {
-//     $('div').show()
-//     return
-//   }
-//   $('div').hide()
-//   $(`div[class = "${$selection}"]`).show()
-// })
-
+$('select').on('change', function () {
+  let $selection = $(this).val()
+  if ($selection === 'default') {
+    $('div').show()
+    return
+  }
+  $('div').hide()
+  $(`div[class = "${$selection}"]`).show()
+})
