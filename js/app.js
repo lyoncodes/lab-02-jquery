@@ -24,16 +24,16 @@ Horn.prototype.render = function () {
   $entry.removeClass('entry')
   $entry.attr('class', this.keyword)
 }
-// Horn.prototype.menu = function () {
-//   if (uniqueHorns.indexOf(this.keyword) === -1) {
-//     $('select').append('<option class = "option"></option>')
-//     let $option = $('option[class = "option"]')
-//     $option.attr('value', this.keyword)
-//     $option.text(this.keyword)
-//     $option.removeClass('option')
-//     uniqueHorns.push(this.keyword)
-//   }
-// }
+Horn.prototype.menu = function () {
+  if (uniqueHorns.indexOf(this.keyword) === -1) {
+    $('select').append('<option class = "option"></option>')
+    let $option = $('option[class = "option"]')
+    $option.attr('value', this.keyword)
+    $option.text(this.keyword)
+    $option.removeClass('option')
+    uniqueHorns.push(this.keyword)
+  }
+}
 function readJson () {
   $.get('data/page-1.json', 'json')
     .then(data => {
@@ -44,7 +44,7 @@ function readJson () {
     .then(() => {
       allHorns.forEach(horn => {
         horn.render()
-        // horn.menu()
+        horn.menu()
       })
     })
 }
