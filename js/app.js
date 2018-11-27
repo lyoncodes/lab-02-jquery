@@ -6,7 +6,7 @@ function Horn (obj) {
   this.description = obj.description
   this.keyword = obj.keyword
   this.horns = obj.horns
-  
+  // push to source array
   allHorns.push(this)
 }
 const allHorns = []
@@ -24,6 +24,12 @@ Horn.prototype.render = function () {
   $entry.removeClass('entry')
   $entry.attr('class', this.keyword)
 }
+// Styling
+$(function () {
+  $('h2').css({'text-align': 'center'})
+  $('p').css({'text-align': 'center'})
+  $('img').css({margin: 'auto'})
+})
 // Horn.prototype.menu = function () {
 //   if (uniqueHorns.indexOf(this.keyword) === -1) {
 //     $('select').append('<option class = "option"></option>')
@@ -50,7 +56,6 @@ function readJson () {
 }
 
 $(() => readJson())
-console.log(allHorns)
 
 $('select').on('change', function () {
   let $selection = $(this).val()
